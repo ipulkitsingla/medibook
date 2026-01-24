@@ -1,0 +1,14 @@
+.animated_text {
+  animation: slideInFromTop 1s ease-out forwards;
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
