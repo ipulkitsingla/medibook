@@ -5,10 +5,10 @@ export default function Navbar() {
   const router = useRouter();
   return (
     <nav className="navbar">
-      <div className="logo">MediBook</div>
+      <div className="logo"><button onClick={() => router.push("/")}>MediBook</button></div>
 
       <ul className="nav-links">
-        <li><button className="view-all" onClick={() => router.push("page.js")}>Home</button></li>
+        <li><button className="view-all" onClick={() => router.push("/")}>Home</button></li>
         <li><button className="view-all" onClick={() => router.push("/hospitals")}>Hospitals</button></li>
         <li>About</li>
         <li>Contact</li>

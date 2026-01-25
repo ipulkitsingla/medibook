@@ -1,4 +1,6 @@
 import { FaCalendarAlt } from "react-icons/fa";
+import { IoTime } from "react-icons/io5";
+import { FaUserDoctor } from "react-icons/fa6";
 
 export default function DoctorCard({ doctor, onBook }) {
   const initials = doctor.name
@@ -14,7 +16,7 @@ export default function DoctorCard({ doctor, onBook }) {
 
         <div className="doctor-info">
           <h3>{doctor.name}</h3>
-          <p className="specialization">🩺 {doctor.specialization}</p>
+          <p className="specialization"><FaUserDoctor/> {doctor.specialization}</p>
           <p className="experience">
             {doctor.experience} years experience
           </p>
@@ -28,7 +30,7 @@ export default function DoctorCard({ doctor, onBook }) {
         </div>
 
         <div className="stat-box">
-          <span className="label">⏱ Slot Duration</span>
+          <span className="label"><IoTime/> Slot Duration</span>
           <strong>{doctor.slotDuration} min</strong>
         </div>
       </div>
