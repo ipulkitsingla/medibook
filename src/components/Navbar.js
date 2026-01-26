@@ -15,8 +15,7 @@ export default function Navbar() {
       </ul>
 
       <div className="nav-actions">
-        <span className="admin">Admin Login</span>
-        <button className="btn-primary">Book Appointment</button>
+        <button className="btn-primary" onClick={() => router.push("/hospitals")}>Book Appointment</button>
       </div>
     </nav>
   );

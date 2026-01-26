@@ -536,3 +536,146 @@ body {
     text-align: center;
   }
 }
+
+
+
+/* Back Button */
+
+.back-wrapper {
+  margin-bottom: 25px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background-color: #F8FEFE;
+  color: black;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.back-btn:hover {
+  background: #F06542;
+  color: white;
+  font-weight: 500;
+}
+
+.back-icon {
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .back-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
+.hospital-header {
+  display: flex;
+  gap: 30px;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 35px;
+  margin-bottom: 50px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.05);
+}
+
+.hospital-header-left {
+  flex-shrink: 0;
+}
+
+.hospital-logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, #e6f7f4, #f0fdfa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: bold;
+  color: #2aa9a1;
+}
+
+.hospital-header-right {
+  flex: 1;
+}
+
+.hospital-header-right h1 {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.hospital-desc {
+  color: #6b7280;
+  max-width: 800px;
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.hospital-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.hospital-tags span {
+  background: #f0fdfa;
+  color: #2aa9a1;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  border: 1px solid #def5f2;
+}
+
+.hospital-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.hospital-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .hospital-doctors-page {
+    padding: 25px 20px;
+  }
+
+  .hospital-header {
+    flex-direction: column;
+    padding: 25px;
+    gap: 20px;
+  }
+
+  .hospital-logo {
+    width: 90px;
+    height: 90px;
+    font-size: 36px;
+  }
+
+  .hospital-header-right h1 {
+    font-size: 22px;
+  }
+
+  .hospital-desc {
+    font-size: 14px;
+  }
+
+  .hospital-meta {
+    gap: 12px;
+  }
+}

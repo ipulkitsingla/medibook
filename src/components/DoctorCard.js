@@ -25,7 +25,7 @@ export default function DoctorCard({ doctor, onBook }) {
 
       <div className="doctor-stats">
         <div className="stat-box">
-          <span className="label">₹ Consultation</span>
+          <span className="label">Consultation Fee</span>
           <strong>₹{doctor.consultationFee}</strong>
         </div>
 
