@@ -102,6 +102,10 @@ body {
   border-radius: 12px;
 }
 
+.card:hover {
+  border-color: black;
+}
+
 /* CTA */
 .cta {
   background: #2aa9a1;
@@ -230,16 +234,16 @@ body {
 
 /* All Hospitals Page */
 
-.all-hospitals {
+.all-hospitals, .doctor-page {
   padding: 80px 60px;
 }
 
-.all-hospitals h1 {
+.all-hospitals h1, .doctor-page h1 {
   font-size: 32px;
   margin-bottom: 10px;
 }
 
-.all-hospitals p {
+.all-hospitals p, .doctor-page p {
   color: #6b7280;
   margin-bottom: 30px;
 }
@@ -271,15 +275,20 @@ body {
 }
 
 .doctor-avatar {
-  width: 70px;
-  height: 70px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
-  background: #e6f7f4;
+  background: #e9f7f5;
+  border: 4px solid #d5f0ec;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
-  font-weight: bold;
+}
+
+.doctor-avatar svg {
+  width: 70%;
+  height: 70%;
   color: #2aa9a1;
 }
 
@@ -677,5 +686,136 @@ body {
 
   .hospital-meta {
     gap: 12px;
+  }
+}
+
+.card:hover {
+  background-color:#2aa9a1;
+  color: white;
+  cursor: pointer;
+}
+
+/* =========================
+   DOCTOR HEADER (DETAIL PAGE)
+   ========================= */
+
+.doctor-page {
+  padding: 40px 60px;
+}
+
+/* Back button spacing */
+.back-wrapper {
+  margin-bottom: 25px;
+}
+
+/* Header container */
+.doctor-header {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+/* Avatar */
+.doctor-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #e9f7f5;
+  border: 4px solid #d5f0ec;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.doctor-avatar svg {
+  width: 70%;
+  height: 70%;
+  color: #2aa9a1;
+}
+
+/* Info */
+.doctor-info h1 {
+  font-size: 32px;
+  margin-bottom: 6px;
+}
+
+.doctor-spec {
+  color: #2aa9a1;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.doctor-info p {
+  color: #6b7280;
+  max-width: 650px;
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+/* Meta info */
+.doctor-meta {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.doctor-meta span {
+  background: #f8fefe;
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #374151;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* Available Days */
+.doctor-days p {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.day-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.day-tags span {
+  padding: 6px 14px;
+  border-radius: 18px;
+  border: 1px solid #d5f0ec;
+  background: #ffffff;
+  font-size: 13px;
+  color: #111827;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 768px) {
+  .doctor-page {
+    padding: 25px 20px;
+  }
+
+  .doctor-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .doctor-meta {
+    justify-content: center;
+  }
+
+  .day-tags {
+    justify-content: center;
   }
 }

@@ -1,6 +1,7 @@
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoTime } from "react-icons/io5";
 import { FaUserDoctor } from "react-icons/fa6";
+import { CgProfile } from "react-icons/cg";
 
 export default function DoctorCard({ doctor, onBook }) {
   const initials = doctor.name
@@ -12,7 +13,7 @@ export default function DoctorCard({ doctor, onBook }) {
   return (
     <div className="doctor-card">
       <div className="doctor-header">
-        <div className="doctor-avatar">{initials}</div>
+        <div className="doctor-avatar"><CgProfile/></div>
 
         <div className="doctor-info">
           <h3>{doctor.name}</h3>

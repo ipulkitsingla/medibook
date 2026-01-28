@@ -95,7 +95,7 @@ export default function DoctorsPage() {
             key={doctor._id}
             doctor={doctor}
             onBook={() =>
-              router.push(`/book/${doctor._id}`)
+              router.push(`/doctors/${doctor._id}`)
             }
           />
         ))}
