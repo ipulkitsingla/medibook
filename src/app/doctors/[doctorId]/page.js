@@ -12,6 +12,7 @@ import {
   IoTimeOutline
 } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
+import BookAppointment from "@/components/BookAppointment";
 
 export default function DoctorPage() {
   const { doctorId } = useParams();
@@ -99,6 +100,8 @@ export default function DoctorPage() {
           )}
         </div>
       </div>
+
+      <BookAppointment doctor={doctor} hospital={hospital} />
 
     </div>
   );
