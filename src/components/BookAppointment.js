@@ -2,7 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { IoTimeOutline } from "react-icons/io5";
+import {
+  IoTimeOutline,
+  IoPersonOutline,
+  IoMailOutline,
+  IoCallOutline,
+  IoDocumentTextOutline,
+} from "react-icons/io5";
 
 function parseTimeToMinutes(value) {
   if (!value) return null;
@@ -107,9 +113,14 @@ function buildMonthCells({ year, month, today, allowedSet }) {
 export default function BookAppointment({ doctor, hospital }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
+  const [bookedSlots, setBookedSlots] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [reason, setReason] = useState("");
 
   const today = useMemo(() => new Date(), []);
   const [viewYear, setViewYear] = useState(() => today.getFullYear());
@@ -151,7 +162,43 @@ export default function BookAppointment({ doctor, hospital }) {
   }, [cells, selectedDate]);
 
   useEffect(() => {
-    // If user changes month, reset time selection.
+    // When selected date changes, load already booked slots for that doctor/date.
+    const doctorId = doctor?._id;
+    if (!selectedDate || !doctorId) {
+      setBookedSlots([]);
+      return;
+    }
+
+    const controller = new AbortController();
+
+    async function loadBooked() {
+      try {
+        const dateStr = selectedDate.toISOString().slice(0, 10);
+        const res = await fetch(
+          `/api/appointments?doctorId=${doctorId}&date=${dateStr}`,
+          { signal: controller.signal }
+        );
+        if (!res.ok) {
+          setBookedSlots([]);
+          return;
+        }
+        const data = await res.json();
+        setBookedSlots(Array.isArray(data) ? data.map((a) => a.time) : []);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          console.error(err);
+        }
+        setBookedSlots([]);
+      }
+    }
+
+    loadBooked();
+
+    return () => controller.abort();
+  }, [selectedDate, doctor]);
+
+  useEffect(() => {
+    // If user changes date, reset time selection and messages.
     setSelectedTime("");
     setError("");
     setSuccess("");
@@ -159,7 +206,13 @@ export default function BookAppointment({ doctor, hospital }) {
 
   async function handleBook() {
     if (!selectedDate || !selectedTime) {
-      setError("Please select both a date and time.");
+      setError("Please select date and time first.");
+      setSuccess("");
+      return;
+    }
+
+    if (!fullName || !email || !phone) {
+      setError("Please fill in your name, email, and phone.");
       setSuccess("");
       return;
     }
@@ -179,6 +232,10 @@ export default function BookAppointment({ doctor, hospital }) {
           doctorId: doctor?._id,
           date: selectedDate.toISOString().slice(0, 10),
           time: selectedTime,
+          patientName: fullName,
+          email,
+          phone,
+          reason,
         }),
       });
 
@@ -188,6 +245,11 @@ export default function BookAppointment({ doctor, hospital }) {
 
       setSuccess("Appointment booked successfully!");
       setError("");
+      // Mark this slot as booked so it can't be selected again
+      setBookedSlots((prev) =>
+        prev.includes(selectedTime) ? prev : [...prev, selectedTime]
+      );
+      setSelectedTime("");
     } catch (err) {
       console.error(err);
       setError("Could not book appointment. Please try again.");
@@ -321,39 +383,131 @@ export default function BookAppointment({ doctor, hospital }) {
 
             {!selectedDate ? (
               <div className="ap-empty">Please select a date first</div>
+            ) : timeSlots.length === 0 ? (
+              <div className="ap-empty">
+                No slots available for this day.
+              </div>
             ) : (
-              <>
-                <div className="ap-time-grid">
-                  {timeSlots.map((slot) => (
-                    <button
-                      key={slot}
-                      type="button"
-                      className={
-                        "ap-time" + (slot === selectedTime ? " active" : "")
-                      }
-                      onClick={() => setSelectedTime(slot)}
-                    >
-                      {slot}
-                    </button>
-                  ))}
-                </div>
-
-                <button
-                  type="button"
-                  className="ap-confirm"
-                  onClick={handleBook}
-                  disabled={submitting || !selectedTime}
-                >
-                  {submitting ? "Booking..." : "Confirm Appointment"}
-                </button>
-              </>
+              <div className="ap-time-grid">
+                {timeSlots.map((slot) => (
+                  // Disable slots that are already booked for this doctor/date
+                  <button
+                    key={slot}
+                    type="button"
+                    className={
+                      "ap-time" +
+                      (slot === selectedTime ? " active" : "") +
+                      (bookedSlots.includes(slot) ? " booked" : "")
+                    }
+                    disabled={bookedSlots.includes(slot)}
+                    onClick={() => {
+                      if (bookedSlots.includes(slot)) return;
+                      setSelectedTime(slot);
+                    }}
+                  >
+                    {slot}
+                  </button>
+                ))}
+              </div>
             )}
+          </div>
+        </div>
+      </div>
+
+      {selectedDate && selectedTime && (
+        <div className="ap-step2-card">
+          <div className="ap-step2-header">
+            <h3>Step 2: Your Details</h3>
+            <p>Please provide your contact information</p>
+          </div>
+
+          <div className="ap-form">
+            <div className="ap-form-row">
+              <div className="ap-input-group">
+                <label className="ap-label">Full Name</label>
+                <div className="ap-input-wrapper">
+                  <span className="ap-input-icon">
+                    <IoPersonOutline />
+                  </span>
+                  <input
+                    type="text"
+                    className="ap-input"
+                    placeholder="Patient Name"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="ap-input-group">
+                <label className="ap-label">Email</label>
+                <div className="ap-input-wrapper">
+                  <span className="ap-input-icon">
+                    <IoMailOutline />
+                  </span>
+                  <input
+                    type="email"
+                    className="ap-input"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="ap-form-row">
+              <div className="ap-input-group full">
+                <label className="ap-label">Phone Number</label>
+                <div className="ap-input-wrapper">
+                  <span className="ap-input-icon">
+                    <IoCallOutline />
+                  </span>
+                  <input
+                    type="tel"
+                    className="ap-input"
+                    placeholder="+91 9876543210"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="ap-form-row">
+              <div className="ap-input-group full">
+                <label className="ap-label">
+                  Reason for Visit <span className="ap-label-optional">(Optional)</span>
+                </label>
+                <div className="ap-input-wrapper textarea">
+                  <span className="ap-input-icon">
+                    <IoDocumentTextOutline />
+                  </span>
+                  <textarea
+                    rows={3}
+                    className="ap-textarea"
+                    placeholder="Briefly describe your symptoms or reason for the appointment..."
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="ap-step2-confirm"
+              onClick={handleBook}
+              disabled={submitting}
+            >
+              {submitting ? "Booking..." : "Confirm Appointment"}
+            </button>
 
             {error && <p className="error">{error}</p>}
             {success && <p className="success">{success}</p>}
           </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

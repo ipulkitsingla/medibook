@@ -11,8 +11,21 @@ export async function POST(req) {
   return Response.json(appointment, { status: 201 });
 }
 
-export async function GET() {
+export async function GET(req) {
   await connectDB();
-  const appointments = await getAppointments();
+
+  const { searchParams } = new URL(req.url);
+  const doctorId = searchParams.get("doctorId");
+  const date = searchParams.get("date");
+
+  const filter = {};
+  if (doctorId) {
+    filter.doctorId = doctorId;
+  }
+  if (date) {
+    filter.date = date;
+  }
+
+  const appointments = await getAppointments(filter);
   return Response.json(appointments);
 }

@@ -1034,6 +1034,14 @@ body {
   font-weight: 600;
 }
 
+.ap-time.booked {
+  background: #f1f5f9;
+  border-style: dashed;
+  border-color: #e5eff0;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
 .ap-confirm {
   width: 100%;
   margin-top: 14px;
@@ -1048,6 +1056,116 @@ body {
 
 .ap-confirm:disabled {
   opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Step 2 card */
+.ap-step2-card {
+  margin-top: 18px;
+  background: #ffffff;
+  border: 1px solid #e6f2f1;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.04);
+}
+
+.ap-step2-header h3 {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.ap-step2-header p {
+  color: #6b7280;
+  margin-bottom: 18px;
+}
+
+.ap-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ap-form-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ap-input-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.ap-input-group.full {
+  flex-basis: 100%;
+}
+
+.ap-label {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #4b5563;
+  display: block;
+}
+
+.ap-label-optional {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.ap-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 12px;
+  border: 1px solid #e5eff0;
+  background: #f8fefe;
+  padding: 8px 10px;
+}
+
+.ap-input-wrapper.textarea {
+  align-items: flex-start;
+}
+
+.ap-input-icon {
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+.ap-input,
+.ap-textarea {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 14px;
+  color: #111827;
+}
+
+.ap-textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+
+.ap-input::placeholder,
+.ap-textarea::placeholder {
+  color: #9ca3af;
+}
+
+.ap-step2-confirm {
+  width: 100%;
+  margin-top: 10px;
+  padding: 13px 14px;
+  border-radius: 14px;
+  border: none;
+  background: #2aa9a1;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.ap-step2-confirm:disabled {
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
